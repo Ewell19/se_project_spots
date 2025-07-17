@@ -28,6 +28,6 @@ This webpage is deplayed to github pages
 
 deployment link :
 
-https://ewell19.github.io/new-repository/
+https://ewell19.github.io/se_project_spots/
 
 (https://www.figma.com/file/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project-%E2%80%94-Spots?type=design&node-id=2%3A60&mode=design&t=afgNFybdorZO6cQo-1)
