@@ -1,21 +1,33 @@
-# Project 3: Spots
+# spots
 
-### Overview  
+Spots is creative design site that is devloped for new software engineers through Tripleten
 
-* Intro  
-* Figma  
-* Images  
-  
-**Intro**
-  
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.  
-  
-**Figma**  
-  
-* [Link to the project on Figma](https://www.figma.com/file/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project-%E2%80%94-Spots?type=design&node-id=2%3A60&mode=design&t=afgNFybdorZO6cQo-1)
-  
-**Images**  
-  
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-  
-Good luck and have fun!
+## Description
+
+This site have unique learning technique that show you how develope your skills in coding and in presentaion for software engineering. This will dive in to button designs that features background-coloring and different pixels that you will learn in sprint 3 , page designs and also how to format diffenent screen between desktop , tablet , cellur device . This is great development tool that you will learn. it will help you understand how different sizes work on screens.
+In the learning cousre of Tripleten. You will also have this site go live active server on the web.
+
+## stack
+
+HTML
+CSS
+Prettierignore
+Gitignore
+Editorconfig
+Vendor
+Favicon
+Responsive design
+
+## Pictures
+
+![alt text](images/1-photo-by-moritz-feldmann-from-pexels.jpg) ![alt text](images/2-photo-by-ceiline-from-pexels.jpg) ![alt text](images/3-photo-by-tubanur-dogan-from-pexels.jpg) ![alt text](images/4-photo-by-maurice-laschet-from-pexels.jpg) ![alt text](images/5-photo-by-van-anh-nguyen-from-pexels.jpg) ![alt text](images/6-photo-by-moritz-feldmann-from-pexels.jpg) ![alt text](images/avatar.jpg) ![alt text](images/heart.svg) ![alt text](images/logo.svg) ![alt text](images/pen.svg) ![alt text](images/plus-sign.svg)
+
+## Depolyment
+
+This webpage is deplayed to github pages
+
+deployment link :
+
+https://ewell19.github.io/se_project_spots/
+
+(https://www.figma.com/file/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project-%E2%80%94-Spots?type=design&node-id=2%3A60&mode=design&t=afgNFybdorZO6cQo-1)
