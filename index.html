@@ -116,12 +116,44 @@
       <footer class="footer">
         <p>2025 &copy; Spots</p>
       </footer>
+      <div class="modal">
+        <div class="modal__container">
+          <button type="button" class="modal__close-btn">
+            <img src="./images/X-icon.png" alt="close icon" />
+          </button>
+          <h2 class="modal__title">New Post</h2>
+          <form class="modal__form">
+            <label for="Card-Caption-input" class="modal__label">
+              Image link
+              <input
+                id="Card-image-input"
+                type="url"
+                class="modal__input"
+                plaxeholder="Place a link to the picture"
+              />
+            </label>
+            <label for="card-caption-input" class="modal__label">
+              Caption
+              <input
+                id="Profile-discription-input"
+                type="text"
+                class="modal__input"
+                plaxeholder="Desbribe yourself"
+              />
+            </label>
+            <button type="button" class="modal__sumbit-btn">save</button>
+          </form>
+        </div>
+      </div>
       <div class="modal modal_is-open">
         <div class="modal__container">
-          <button type="button" class="modal__close-btn">X</button>
+          <button type="button" class="modal__close-btn">
+            <img src="./images/X-icon.png" alt="close icon" />
+          </button>
           <h2 class="modal__title">Edit Profile</h2>
           <form class="modal__form">
             <label for="profile-name-input" class="modal__label">
+              Name
               <input
                 id="Profile-name-input"
                 type="text"
@@ -130,6 +162,7 @@
               />
             </label>
             <label for="profile-discription-input" class="modal__label">
+              Desiscription
               <input
                 id="Profile-discription-input"
                 type="text"
