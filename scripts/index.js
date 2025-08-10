@@ -1,4 +1,4 @@
-const editProfileBtn = document.querySelector("Profile__edit-btn");
+const editProfileBtn = document.querySelector("profile__edit-btn");
 const editProfileModal = document.querySelector("edit-profile-modal");
 const editProfileCloseBtn = editProfileModal.querySelector("modal__close-btn");
 
@@ -10,7 +10,7 @@ editProfileBtn.addEventListener("click", function () {
   editProfileModal.classList.add("modal_is-opended");
 });
 
-editProileclosedBtn.addEventListener("click", function () {
+editProfileCloseBtn.addEventListener("click", function () {
   editProfileModal.classList.remove("modal_is-opended");
 });
 
