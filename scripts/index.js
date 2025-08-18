@@ -45,11 +45,10 @@ function handleEditProfileSubmit(evt) {
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-  // Logic to handle new post submission
   console.log("New post submitted");
   newPostModal.classList.remove("modal_is-opened");
 }
 
-editProfileform.addEventListener("submit", handleNewPostSubmit);
+editProfileform.addEventListener("submit", handleEditProfileSubmit);
 
 newPostModal.addEventListener("submit", handleNewPostSubmit);
