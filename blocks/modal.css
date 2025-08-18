@@ -75,7 +75,7 @@
   color: #2121214d;
 }
 
-.modal__sumbit-btn {
+.modal__submit-btn {
   max-width: 156px;
   padding: 18px;
   border-radius: 8px;
@@ -85,7 +85,7 @@
   font-size: 16px;
 }
 
-.modal__sumbit-btn:hover {
+.modal__submit-btn:hover {
   cursor: pointer;
   background-color: #212121;
   transition-duration: 0.3s;
@@ -119,7 +119,7 @@
     margin: 0 0 12px;
   }
 
-  .modal__sumbit-btn {
+  .modal__submit-btn {
     width: 300px;
     max-width: none;
     align-items: center;
