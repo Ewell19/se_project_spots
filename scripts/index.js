@@ -14,7 +14,8 @@ const editProfileDescriptionInput = editProfileModal.querySelector(
 const newPostBtn = document.querySelector(".profile__add-btn");
 const newPostModal = document.querySelector("#new-post-modal");
 const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
-
+const newPostForm = newPostModal.querySelector(".modal__form");
+const newPostSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
@@ -45,10 +46,9 @@ function handleEditProfileSubmit(evt) {
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-  console.log("New post submitted");
+  console.log("New post modal submitted");
   newPostModal.classList.remove("modal_is-opened");
 }
 
 editProfileform.addEventListener("submit", handleEditProfileSubmit);
-
-newPostModal.addEventListener("submit", handleNewPostSubmit);
+newPostForm.addEventListener("submit", handleNewPostSubmit);
