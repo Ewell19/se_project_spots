@@ -15,6 +15,8 @@ const newPostBtn = document.querySelector(".profile__add-btn");
 const newPostModal = document.querySelector("#new-post-modal");
 const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
 const newPostForm = newPostModal.querySelector(".modal__form");
+const newPostLinkInput = newPostForm.querySelector("#card-image-input");
+const newPostCaptionInput = newPostForm.querySelector("#card-caption-input");
 const newPostSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
@@ -46,7 +48,10 @@ function handleEditProfileSubmit(evt) {
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-  console.log("New post modal submitted");
+  const newPostLink = newPostLinkInput.value;
+  const newPostCaption = newPostCaptionInput.value;
+  console.log("New post link:", newPostLink);
+  console.log("New post caption:", newPostCaption);
   newPostModal.classList.remove("modal_is-opened");
 }
 
