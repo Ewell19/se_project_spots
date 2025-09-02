@@ -48,6 +48,28 @@ const newPostSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
+const cardTemplate = document
+  .querySelector("#card__template")
+  .content.querySelector(".card");
+
+const cardList = document.querySelector(".cards__list");
+function getCardElement(data) {
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__title");
+  const cardImage = cardElement.querySelector(".card__image");
+
+  cardImage.src = data.link;
+  cardImage.alt = data.name;
+  cardTitle.textContent = data.name;
+
+  const cardLikeBtn = cardElement.querySelector(".card__like-button");
+  cardLikeBtn.addEventListener("click", () => {
+    cardLikeBtn.classList.toggle("card__like-button_active");
+  });
+
+  return cardElement;
+}
+
 function openModal(modal) {
   modal.classList.add("modal__is-opened");
 }
@@ -85,6 +107,13 @@ function handleNewPostSubmit(evt) {
   evt.preventDefault();
   const newPostLink = newPostLinkInput.value;
   const newPostCaption = newPostCaptionInput.value;
+  const inputValues = {
+    name: newPostCaption,
+    link: newPostLink,
+  };
+  const cardElement = getCardElement(inputValues);
+  cardList.prepend(cardElement);
+
   console.log("New post link:", newPostLink);
   console.log("New post caption:", newPostCaption);
   closeModal(newPostModal);
@@ -93,7 +122,7 @@ function handleNewPostSubmit(evt) {
 editProfileform.addEventListener("submit", handleEditProfileSubmit);
 newPostForm.addEventListener("submit", handleNewPostSubmit);
 
-initialCards.forEach(function (card) {
-  console.log(card.name);
-  console.log(card.link);
+initialCards.forEach(function (item) {
+  const cardElement = getCardElement(item);
+  cardList.append(cardElement);
 });
