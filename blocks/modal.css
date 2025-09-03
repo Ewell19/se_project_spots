@@ -161,11 +161,11 @@
   font-family: "Poppins", Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 500;
-  width: 199px;
   height: 24px;
   font-style: medium;
   line-height: 120%;
   border-radius: 8px;
+  display: inline-block;
 }
 
 @media screen and (max-width: 480px) {
