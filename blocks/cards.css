@@ -16,6 +16,7 @@
 
 @media screen and (max-width: 627px) {
   .cards {
+    display: flex;
     flex-direction: column;
     max-width: 288px;
     align-items: center;

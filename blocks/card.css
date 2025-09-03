@@ -7,6 +7,7 @@
 
 .card__image {
   height: 413px;
+  cursor: pointer;
   width: 100%;
   object-fit: cover;
   display: block;
@@ -28,7 +29,7 @@
   background-image: url(../images/delete-hover.svg);
   cursor: pointer;
   opacity: 1;
-  transition-duration: 0.4;
+  transition-duration: 0.4s;
 }
 
 .card__title {
@@ -66,10 +67,7 @@
 .card__like-button:hover {
   cursor: pointer;
   opacity: 1;
-  transition-duration: 0.4;
-}
-
-.card__like-button:hover {
+  transition-duration: 0.4s;
   opacity: 0.4;
 }
 

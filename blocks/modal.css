@@ -68,6 +68,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition-duration: 0.3s;
 }
 
 .modal__close-btn:hover {
@@ -102,7 +103,7 @@
   padding: 16px 12px;
   border-radius: 8px;
   margin: 8px 0 0;
-  border: 1px solid rgba(33, 33, 33, 04);
+  border: 1px solid rgba(33, 33, 33, 0.4);
 }
 
 .modal__input:hover {
