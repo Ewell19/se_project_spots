@@ -55,10 +55,10 @@ const profileDescription = document.querySelector(".profile__description");
 const newPreviewModal = document.querySelector("#new-preview-modal");
 const NewPreviewImage = newPreviewModal.querySelector(".modal__image");
 const newPreviewCaption = newPreviewModal.querySelector(".modal__caption");
-const closeBtn = newPreviewModal.querySelector(
+const imagePreviewCloseButton = newPreviewModal.querySelector(
   ".modal__close-btn_type_preview"
 );
-closeBtn.addEventListener("click", closeModal);
+imagePreviewCloseButton.addEventListener("click", closeModal);
 
 const cardTemplate = document
   .querySelector("#card__template")
@@ -137,8 +137,6 @@ function handleNewPostSubmit(evt) {
   const cardElement = getCardElement(inputValues);
   cardList.prepend(cardElement);
 
-  console.log("New post link:", newPostLink);
-  console.log("New post caption:", newPostCaption);
   closeModal(newPostModal);
 }
 
