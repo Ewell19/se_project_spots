@@ -58,8 +58,9 @@ const newPreviewCaption = newPreviewModal.querySelector(".modal__caption");
 const imagePreviewCloseButton = newPreviewModal.querySelector(
   ".modal__close-btn_type_preview"
 );
-imagePreviewCloseButton.addEventListener("click", closeModal);
-
+imagePreviewCloseButton.addEventListener("click", function () {
+  closeModal(newPreviewModal);
+});
 const cardTemplate = document
   .querySelector("#card__template")
   .content.querySelector(".card");
