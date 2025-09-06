@@ -167,6 +167,7 @@
   line-height: 120%;
   border-radius: 8px;
   display: inline-block;
+  margin: 0;
 }
 
 @media screen and (max-width: 627px) {
@@ -186,8 +187,9 @@
     margin: 8px 0 0;
     font-size: 16px;
   }
+
   .modal__title {
-    font-size: 24px;
+    font-size: 16px;
     margin: 0 0 16px;
   }
 
@@ -197,8 +199,7 @@
     align-items: center;
     margin: 0 0 12px;
   }
-}
-@media screen and (max-width: 627px) {
+
   /*placed below the 480px media to avoid being over written*/
   .modal__close-btn_type_preview {
     top: -48px;
@@ -212,17 +213,5 @@
 
   .modal__image {
     max-width: unset;
-  }
-
-  .modal__caption {
-    background: #212121;
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 8px;
-    display: inline-block;
-    width: auto;
-    max-width: 100%;
-    box-sizing: border-box;
-    word-break: break-word;
   }
 }
