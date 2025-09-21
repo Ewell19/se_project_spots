@@ -53,7 +53,7 @@ const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
 const newPreviewModal = document.querySelector("#new-preview-modal");
-const NewPreviewImage = newPreviewModal.querySelector(".modal__image");
+const newPreviewImage = newPreviewModal.querySelector(".modal__image");
 const newPreviewCaption = newPreviewModal.querySelector(".modal__caption");
 const imagePreviewCloseButton = newPreviewModal.querySelector(
   ".modal__close-btn_type_preview"
@@ -76,8 +76,8 @@ function getCardElement(data) {
   cardTitle.textContent = data.name;
 
   cardImage.addEventListener("click", () => {
-    NewPreviewImage.src = data.link;
-    NewPreviewImage.alt = data.name;
+    newPreviewImage.src = data.link;
+    newPreviewImage.alt = data.name;
     newPreviewCaption.textContent = data.name;
     openModal(newPreviewModal);
   });
@@ -94,12 +94,29 @@ function getCardElement(data) {
   return cardElement;
 }
 
+function handleEscClose(evt) {
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".modal__is-opened");
+    if (openedModal) closeModal(openedModal);
+  }
+}
+
+function handleOverlayClick(evt) {
+  if (evt.target.classList.contains("modal")) {
+    closeModal(evt.target);
+  }
+}
+
 function openModal(modal) {
   modal.classList.add("modal__is-opened");
+  document.addEventListener("keydown", handleEscClose);
+  modal.addEventListener("mousedown", handleOverlayClick);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal__is-opened");
+  document.removeEventListener("keydown", handleEscClose);
+  modal.removeEventListener("mousedown", handleOverlayClick);
 }
 
 editProfileBtn.addEventListener("click", function () {
@@ -125,7 +142,7 @@ function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = editProfileNameInput.value;
   profileDescription.textContent = editProfileDescriptionInput.value;
-  newPostForm.reset();
+  editProfileform.reset();
   closeModal(editProfileModal);
 }
 

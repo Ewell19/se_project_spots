@@ -23,7 +23,7 @@
   right: 10px;
   border: none;
   background-color: transparent;
-  opacity: 40%;
+  opacity: 0.4;
 }
 .card__delete-button:hover {
   background-image: url(../images/delete-hover.svg);
@@ -59,12 +59,13 @@
   height: 20px;
   border: none;
   background-color: transparent;
-  opacity: 40%;
+  opacity: 0.4;
 }
 
 .card__like-button_active {
+  /* Always use with base class: class="card__like-button card__like-button_active" */
   background-image: url(../images/like-active.svg);
-  opacity: 100%;
+  opacity: 1;
 }
 
 .card__like-button:hover {

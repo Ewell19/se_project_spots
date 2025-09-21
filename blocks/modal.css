@@ -60,7 +60,7 @@
 .modal__close-btn_type_preview:hover {
   opacity: 1;
   cursor: pointer;
-  transition-duration: 0.3;
+  transition-duration: 0.3s;
 }
 
 .modal__close-btn-img {
@@ -74,7 +74,7 @@
 .modal__close-btn:hover {
   cursor: pointer;
   opacity: 1;
-  transition-duration: 0.3;
+  transition-duration: 0.3s;
 }
 
 .modal__title {
