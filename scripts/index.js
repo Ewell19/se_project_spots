@@ -105,6 +105,7 @@ function closeModal(modal) {
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileName.textContent;
   editProfileDescriptionInput.value = profileDescription.textContent;
+  resetValidation(editProfileform, settings);
   openModal(editProfileModal);
 });
 
@@ -124,6 +125,7 @@ function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = editProfileNameInput.value;
   profileDescription.textContent = editProfileDescriptionInput.value;
+  newPostForm.reset();
   closeModal(editProfileModal);
 }
 
@@ -133,11 +135,11 @@ function handleNewPostSubmit(evt) {
   const newPostCaption = newPostCaptionInput.value;
   const inputValues = {
     name: newPostCaption,
-    link: newPostForm.reset(),
+    link: newPostLink,
   };
   const cardElement = getCardElement(inputValues);
   cardList.prepend(cardElement);
-
+  newPostForm.reset();
   closeModal(newPostModal);
 }
 
