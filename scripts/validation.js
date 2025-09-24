@@ -2,7 +2,7 @@ const settings = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__submit-btn",
-  inactiveButtonClass: "modal__input_submit_btn_disabled",
+  inactiveButtonClass: "modal__submit-btn_disabled",
   errorClass: "modal__input_type_error",
   errorMessage: {
     valueMissing: "This field is required",
