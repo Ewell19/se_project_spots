@@ -4,11 +4,53 @@
   border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
 }
 
+/* Avatar wrap: position relative so the edit button can overlay the image */
+.profile__avatar-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Edit avatar button: overlay on desktop, revealed on hover/focus */
+.profile__avatar-edit {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: none;
+  background: transparent; /* match edit profile button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  opacity: 1; /* always visible */
+  transition: opacity 160ms ease, transform 120ms ease;
+  cursor: pointer;
+}
+
+.profile__avatar-edit img {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Reveal the edit button on hover (desktop) or when focused (keyboard) */
+.profile__avatar-wrap:hover .profile__avatar-edit,
+.profile__avatar-edit:focus {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
 .profile__avatar {
   margin-right: 20px;
   border-radius: 8px;
   width: 190px;
   height: 190px;
+}
+
+.profile__avatar-btn::after {
+  content: "Edit Avatar";
 }
 
 .profile__column {
@@ -103,6 +145,22 @@
     height: 80px;
     width: 80px;
     margin-bottom: 12px;
+  }
+
+  /* On small screens, show the avatar edit button inline (no overlay) */
+  .profile__avatar-wrap {
+    position: static;
+  }
+
+  .profile__avatar-edit {
+    position: static;
+    opacity: 1;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    margin-left: 8px;
+    border-radius: 4px;
+    padding: 0;
   }
 
   .profile__name {

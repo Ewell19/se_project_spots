@@ -16,11 +16,20 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            src="./images/avatar.jpg"
-            alt="Bessie Colman"
-            class="profile__avatar"
-          />
+          <div class="profile__avatar-wrap">
+            <img
+              src="<%=require('./images/avatar.jpg')%>"
+              alt="Bessie Colman"
+              class="profile__avatar"
+            />
+            <button
+              type="button"
+              class="profile__avatar-edit"
+              aria-label="Edit avatar"
+            >
+              <img src="./images/pen.svg" alt="edit avatar" />
+            </button>
+          </div>
           <div class="profile__column">
             <h1 class="profile__name">
               Aliaune Damala Bouga Time Bongo Puru Nacka Lu Lu Lu Badara Akon
@@ -174,6 +183,60 @@
           </button>
           <img src="#" alt="" class="modal__image" />
           <h2 class="modal__caption"></h2>
+        </div>
+      </div>
+
+      <!-- Delete confirmation modal -->
+      <div class="modal" id="confirm-delete-modal">
+        <div class="modal__container">
+          <button type="button" class="modal__close-btn">
+            <img
+              class="modal__close-btn-img"
+              src="./images/X-icon.svg"
+              alt="close icon"
+            />
+          </button>
+          <h2 class="modal__title">Are you sure?</h2>
+          <form class="modal__form" novalidate>
+            <p class="modal__text">
+              Do you really want to delete this card? This action cannot be
+              undone.
+            </p>
+            <button type="submit" class="modal__submit-btn">Yes, delete</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Avatar edit modal -->
+      <div class="modal" id="edit-avatar-modal">
+        <div class="modal__container">
+          <button type="button" class="modal__close-btn">
+            <img
+              class="modal__close-btn-img"
+              src="./images/X-icon.svg"
+              alt="close icon"
+            />
+          </button>
+          <h2 class="modal__title">Change profile picture</h2>
+          <form class="modal__form" id="avatar-form" novalidate>
+            <label for="avatar-link-input" class="modal__label">
+              Avatar link
+              <input
+                id="avatar-link-input"
+                type="url"
+                class="modal__input"
+                placeholder="Link to image"
+                required
+              />
+              <span
+                id="avatar-link-input-error"
+                class="modal__input-error"
+              ></span>
+            </label>
+            <button type="submit" class="modal__submit-btn" disabled>
+              save
+            </button>
+          </form>
         </div>
       </div>
     </div>

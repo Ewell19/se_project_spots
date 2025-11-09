@@ -28,7 +28,13 @@ module.exports = {
   devtool: "inline-source-map",
   stats: "errors-only",
   devServer: {
-    static: { directory: path.resolve(__dirname, "./dist") },
+    // Serve built files from `dist` and also serve images directly from `src/images`
+    // during development so image assets are available even if CopyWebpackPlugin
+    // didn't run or files are served from memory.
+    static: [
+      { directory: path.resolve(__dirname, "./dist") },
+      { directory: path.resolve(__dirname, "./src/images") },
+    ],
     compress: true,
     port: 8080,
     open: true,
