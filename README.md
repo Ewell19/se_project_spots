@@ -33,3 +33,5 @@ https://ewell19.github.io/se_project_spots/
 https://drive.google.com/file/d/1jhOjgqAUVvjqFQ4nZxsCjtxI2l1-xR4z/view?usp=sharing
 
 (https://www.figma.com/file/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project-%E2%80%94-Spots?type=design&node-id=2%3A60&mode=design&t=afgNFybdorZO6cQo-1)
+
+[text](<../Desktop/spots video project 9 copy.zip>)
