@@ -5,36 +5,70 @@ import {
   resetValidation,
 } from "../scripts/validation.js";
 
-const initialCards = [
-  {
-    name: "Golden Gate Bridge",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+import Api from "../utils/Api.js";
+
+// const initialCards = [
+//   {
+//     name: "Golden Gate Bridge",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+//   },
+//   {
+//     name: "Val Thorens",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
+//   },
+//   {
+//     name: "Restaurant terrace",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
+//   },
+//   {
+//     name: "An outdoor cafe",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
+//   },
+//   {
+//     name: "A very long bridge, over the forest and through the trees",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
+//   },
+//   {
+//     name: "Tunnel with morning light",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
+//   },
+//   {
+//     name: "Mountain house",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
+//   },
+// ];
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "c97b7091-6f31-4820-913f-122b7552848c",
+    "Content-Type": "application/json",
   },
-  {
-    name: "Val Thorens",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
-  },
-  {
-    name: "Restaurant terrace",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
-  },
-  {
-    name: "An outdoor cafe",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
-  },
-  {
-    name: "A very long bridge, over the forest and through the trees",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
-  },
-  {
-    name: "Tunnel with morning light",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
-  },
-  {
-    name: "Mountain house",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
-  },
-];
+});
+let currentUserId = null;
+let selectedCard = null;
+let selectedCardId = null;
+
+const confirmDeleteModal = document.querySelector("#confirm-delete-modal");
+const confirmDeleteForm = confirmDeleteModal
+  ? confirmDeleteModal.querySelector(".modal__form")
+  : null;
+
+if (confirmDeleteModal) {
+  const confirmClose = confirmDeleteModal.querySelector(".modal__close-btn");
+  if (confirmClose) {
+    confirmClose.addEventListener("click", () =>
+      closeModal(confirmDeleteModal)
+    );
+  }
+  const confirmCancel = confirmDeleteModal.querySelector(".modal__cancel-btn");
+  if (confirmCancel) {
+    confirmCancel.addEventListener("click", () =>
+      closeModal(confirmDeleteModal)
+    );
+  }
+}
+// initialization runs later after DOM queries
 
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
@@ -58,6 +92,7 @@ const newPostCaptionInput = newPostForm.querySelector("#card-caption-input");
 const newPostSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
+const profileAvatar = document.querySelector(".profile__avatar");
 
 const newPreviewModal = document.querySelector("#new-preview-modal");
 const newPreviewImage = newPreviewModal.querySelector(".modal__image");
@@ -68,6 +103,47 @@ const imagePreviewCloseButton = newPreviewModal.querySelector(
 imagePreviewCloseButton.addEventListener("click", function () {
   closeModal(newPreviewModal);
 });
+// Avatar edit modal & wiring
+const avatarEditBtn = document.querySelector(".profile__avatar-edit");
+const editAvatarModal = document.querySelector("#edit-avatar-modal");
+const avatarForm = editAvatarModal
+  ? editAvatarModal.querySelector(".modal__form")
+  : null;
+const avatarInput = avatarForm
+  ? avatarForm.querySelector("#avatar-link-input")
+  : null;
+const avatarSubmitBtn = avatarForm
+  ? avatarForm.querySelector(".modal__submit-btn")
+  : null;
+if (editAvatarModal) {
+  const avatarClose = editAvatarModal.querySelector(".modal__close-btn");
+  if (avatarClose)
+    avatarClose.addEventListener("click", () => closeModal(editAvatarModal));
+}
+if (avatarEditBtn && editAvatarModal) {
+  avatarEditBtn.addEventListener("click", () => {
+    if (avatarInput && profileAvatar)
+      avatarInput.value = profileAvatar.src || "";
+    if (avatarForm) resetValidation(avatarForm, settings);
+    openModal(editAvatarModal);
+  });
+}
+// save original submit button texts for UX toggling
+const editProfileSubmitBtnText = editProfileSubmitBtn
+  ? editProfileSubmitBtn.textContent
+  : "save";
+const newPostSubmitBtnText = newPostSubmitBtn
+  ? newPostSubmitBtn.textContent
+  : "save";
+const avatarSubmitBtnText = avatarSubmitBtn
+  ? avatarSubmitBtn.textContent
+  : "save";
+const confirmDeleteSubmitBtn = confirmDeleteForm
+  ? confirmDeleteForm.querySelector(".modal__submit-btn")
+  : null;
+const confirmDeleteSubmitBtnText = confirmDeleteSubmitBtn
+  ? confirmDeleteSubmitBtn.textContent
+  : "Yes, delete";
 const cardTemplate = document
   .querySelector("#card__template")
   .content.querySelector(".card");
@@ -81,6 +157,14 @@ function getCardElement(data) {
   cardImage.src = data.link;
   cardImage.alt = data.name;
   cardTitle.textContent = data.name;
+  // attach id for future operations
+  if (data._id) cardElement.dataset.id = data._id;
+
+  // show like state if provided
+  const cardLikeBtn = cardElement.querySelector(".card__like-button");
+  if (data.isLiked) {
+    cardLikeBtn.classList.add("card__like-button_active");
+  }
 
   cardImage.addEventListener("click", () => {
     newPreviewImage.src = data.link;
@@ -89,13 +173,29 @@ function getCardElement(data) {
     openModal(newPreviewModal);
   });
 
-  const cardLikeBtn = cardElement.querySelector(".card__like-button");
+  // like / unlike via API
   cardLikeBtn.addEventListener("click", () => {
-    cardLikeBtn.classList.toggle("card__like-button_active");
+    const cardId = cardElement.dataset.id;
+    if (!cardId) return;
+    const shouldLike = !cardLikeBtn.classList.contains(
+      "card__like-button_active"
+    );
+    api
+      .changeLikeStatus(cardId, shouldLike)
+      .then(() => {
+        cardLikeBtn.classList.toggle("card__like-button_active", shouldLike);
+      })
+      .catch((err) => console.error("Failed to change like status:", err));
   });
+
   const cardDeleteBtn = cardElement.querySelector(".card__delete-button");
+  // hide delete button if current user isn't the owner
+  if (data.owner && currentUserId && data.owner !== currentUserId) {
+    cardDeleteBtn.style.display = "none";
+  }
+  // instead of deleting immediately, open confirmation modal
   cardDeleteBtn.addEventListener("click", () => {
-    cardDeleteBtn.closest(".card").remove();
+    handleDeleteCard(cardElement, data);
   });
 
   return cardElement;
@@ -148,10 +248,27 @@ newPostCloseBtn.addEventListener("click", function () {
 
 function handleEditProfileSubmit(evt) {
   evt.preventDefault();
-  profileName.textContent = editProfileNameInput.value;
-  profileDescription.textContent = editProfileDescriptionInput.value;
-  editProfileform.reset();
-  closeModal(editProfileModal);
+  const name = editProfileNameInput.value;
+  const about = editProfileDescriptionInput.value;
+  if (editProfileSubmitBtn) {
+    editProfileSubmitBtn.textContent = "Saving...";
+    editProfileSubmitBtn.disabled = true;
+  }
+  api
+    .setUserInfo({ name, about })
+    .then((updatedUser) => {
+      profileName.textContent = updatedUser.name;
+      profileDescription.textContent = updatedUser.about;
+      editProfileform.reset();
+      closeModal(editProfileModal);
+    })
+    .catch((err) => console.error("Failed to update profile:", err))
+    .finally(() => {
+      if (editProfileSubmitBtn) {
+        editProfileSubmitBtn.textContent = editProfileSubmitBtnText;
+        editProfileSubmitBtn.disabled = false;
+      }
+    });
 }
 
 function handleNewPostSubmit(evt) {
@@ -162,18 +279,152 @@ function handleNewPostSubmit(evt) {
     name: newPostCaption,
     link: newPostLink,
   };
-  const cardElement = getCardElement(inputValues);
-  cardList.prepend(cardElement);
-  newPostForm.reset();
-  closeModal(newPostModal);
+  if (newPostSubmitBtn) {
+    newPostSubmitBtn.textContent = "Saving...";
+    newPostSubmitBtn.disabled = true;
+  }
+  api
+    .addCard(inputValues)
+    .then((card) => {
+      const cardElement = getCardElement(card);
+      cardList.prepend(cardElement);
+      newPostForm.reset();
+      closeModal(newPostModal);
+    })
+    .catch((err) => console.error("Failed to add card:", err))
+    .finally(() => {
+      if (newPostSubmitBtn) {
+        newPostSubmitBtn.textContent = newPostSubmitBtnText;
+        newPostSubmitBtn.disabled = false;
+      }
+    });
+}
+
+// Avatar update handler
+function handleAvatarSubmit(evt) {
+  evt.preventDefault();
+  if (!avatarForm || !avatarInput) return;
+  if (avatarSubmitBtn) {
+    avatarSubmitBtn.textContent = "Saving...";
+    avatarSubmitBtn.disabled = true;
+  }
+  const avatar = avatarInput.value;
+  // basic client-side URL validation
+  try {
+    new URL(avatar);
+  } catch (e) {
+    console.error("Avatar URL is invalid:", avatar);
+    if (avatarSubmitBtn) {
+      avatarSubmitBtn.textContent = avatarSubmitBtnText;
+      avatarSubmitBtn.disabled = false;
+    }
+    return;
+  }
+
+  // optimistic UI: remember previous src so we can revert on failure
+  const previousAvatar = profileAvatar ? profileAvatar.src : "";
+  if (profileAvatar) {
+    profileAvatar.src = avatar;
+  }
+
+  console.log("Sending avatar PATCH with payload:", { avatar });
+  api
+    .setUserAvatar({ avatar })
+    .then((updatedUser) => {
+      console.log("Avatar update response:", updatedUser);
+      if (profileAvatar) {
+        profileAvatar.src = updatedUser.avatar;
+        profileAvatar.alt = updatedUser.name || profileName.textContent;
+      }
+      avatarForm.reset();
+      closeModal(editAvatarModal);
+    })
+    .catch((err) => {
+      console.error("Failed to update avatar:", err);
+      // revert optimistic update
+      if (profileAvatar) profileAvatar.src = previousAvatar;
+      // show a user-visible message (non-blocking)
+      try {
+        alert(
+          "Failed to update avatar. Please check the image URL and try again."
+        );
+      } catch (e) {
+        /* ignore in non-browser env */
+      }
+    })
+    .finally(() => {
+      if (avatarSubmitBtn) {
+        avatarSubmitBtn.textContent = avatarSubmitBtnText;
+        avatarSubmitBtn.disabled = false;
+      }
+    });
+}
+
+if (avatarForm) {
+  avatarForm.addEventListener("submit", handleAvatarSubmit);
+}
+
+// Delete flow: open confirmation and delete on submit
+function handleDeleteCard(cardElement, data) {
+  selectedCard = cardElement;
+  selectedCardId = data && data._id ? data._id : cardElement.dataset.id;
+  if (confirmDeleteModal) openModal(confirmDeleteModal);
+}
+
+function handleDeleteSubmit(evt) {
+  evt.preventDefault();
+  if (!selectedCardId) {
+    console.warn("No card id selected for deletion");
+    closeModal(confirmDeleteModal);
+    return;
+  }
+  if (confirmDeleteSubmitBtn) {
+    confirmDeleteSubmitBtn.textContent = "Deleting...";
+    confirmDeleteSubmitBtn.disabled = true;
+  }
+  api
+    .deleteCard(selectedCardId)
+    .then(() => {
+      if (selectedCard && selectedCard.remove) selectedCard.remove();
+      selectedCard = null;
+      selectedCardId = null;
+      if (confirmDeleteModal) closeModal(confirmDeleteModal);
+    })
+    .catch((err) => console.error("Failed to delete card:", err))
+    .finally(() => {
+      if (confirmDeleteSubmitBtn) {
+        confirmDeleteSubmitBtn.textContent = confirmDeleteSubmitBtnText;
+        confirmDeleteSubmitBtn.disabled = false;
+      }
+    });
+}
+
+if (confirmDeleteForm) {
+  confirmDeleteForm.addEventListener("submit", handleDeleteSubmit);
 }
 
 editProfileform.addEventListener("submit", handleEditProfileSubmit);
 newPostForm.addEventListener("submit", handleNewPostSubmit);
 
-initialCards.forEach(function (item) {
-  const cardElement = getCardElement(item);
-  cardList.append(cardElement);
-});
-
 enableValidation(settings);
+
+// Initialize app data: load user profile and initial cards
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cards]) => {
+    console.log("App init - user:", user);
+    if (profileAvatar) {
+      profileAvatar.src = user.avatar;
+      profileAvatar.alt = user.name;
+    }
+    if (profileName) profileName.textContent = user.name;
+    if (profileDescription) profileDescription.textContent = user.about;
+    currentUserId = user._id;
+
+    if (Array.isArray(cards) && cardList) {
+      cards.forEach((card) => {
+        const cardElement = getCardElement(card);
+        cardList.append(cardElement);
+      });
+    }
+  })
+  .catch((err) => console.error("Failed to initialize data:", err));
