@@ -31,6 +31,13 @@
   position: relative;
 }
 
+/* Specific sizing for the delete confirmation modal: fixed width and hug height */
+#confirm-delete-modal .modal__container {
+  width: 630px;
+  max-width: 630px;
+  min-height: 172px; /* hug height around content */
+}
+
 .modal__close-btn {
   padding: 0;
   position: absolute;
@@ -41,6 +48,7 @@
   opacity: 0.4;
   border: none;
   background-color: transparent;
+  transition-duration: 0.3s;
 }
 
 .modal__close-btn_type_preview {
@@ -151,7 +159,7 @@
 
 .modal__submit-btn:hover {
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.9;
   transition-duration: 0.3s;
 }
 
@@ -159,6 +167,136 @@
 .modal__submit-btn_disabled {
   background-color: #999999;
   cursor: default;
+}
+
+/* Confirmation actions: ensure delete and cancel buttons match requested size */
+.modal__actions {
+  display: flex;
+  gap: 20px; /* requested gap */
+  margin-top: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__actions .modal__submit-btn,
+.modal__actions .modal__cancel-btn {
+  width: 332px;
+  height: 52px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  opacity: 1;
+  transform: rotate(0deg);
+  /* ensure identical typography so buttons render the same */
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 100%;
+}
+
+/* Ensure cancel button inside actions matches the visual shape and sits on the left */
+.modal__actions .modal__cancel-btn {
+  background: #ffffff;
+  border: 1px solid rgba(33, 33, 33, 0.12);
+  color: #212121;
+  border-radius: 8px;
+  /* ensure the cancel button appears on the right */
+  order: 2;
+}
+
+/* Specific sizing for cancel button: fixed width 156px, height 52px, 1px border, 8px radius */
+.modal__actions .modal__cancel-btn {
+  width: 156px;
+  height: 52px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 1px solid rgba(33, 33, 33, 0.12);
+  border-radius: 8px;
+}
+
+/* Ensure the delete/submit button appears on the left */
+.modal__actions .modal__submit-btn {
+  order: 1;
+}
+
+/* Positive action (e.g. 'Yes, delete') in confirmation modals should be red */
+.modal__actions .modal__submit-btn {
+  background: rgba(255, 101, 101, 1);
+  color: #ffffff;
+}
+
+.modal__actions .modal__submit-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition-duration: 0.2s;
+}
+
+/* Also ensure the standalone confirm-delete modal button is red (it isn't wrapped in .modal__actions) */
+#confirm-delete-modal .modal__submit-btn {
+  background: rgba(255, 101, 101, 1);
+  color: #ffffff;
+}
+
+#confirm-delete-modal .modal__submit-btn:hover {
+  opacity: 0.9;
+}
+
+/* Position the close button for the confirm-delete modal flush to the top of the modal container */
+#confirm-delete-modal .modal__close-btn {
+  /* position absolute so coordinates are relative to the modal container (.modal__container is already position: relative) */
+  position: absolute;
+  top: -8px; /* flush to the top edge of the modal container */
+  right: -50px; /* flush to the right edge of the modal container */
+  left: auto;
+  z-index: 1000; /* ensure it sits above the modal content */
+  margin: 0;
+  opacity: 1; /* force fully visible so white icon is clear */
+}
+
+/* Make the close icon white for the confirm-delete modal */
+#confirm-delete-modal .modal__close-btn-img {
+  /* Remove color-inversion so the SVG's native white stroke shows as white */
+  filter: none;
+}
+
+/* Keep edit-profile and new-post close buttons identical to edit-avatar: show the inline <img>
+   and use the base opacity/hover rules defined for `.modal__close-btn` */
+#edit-profile-modal .modal__close-btn-img,
+#new-post-modal .modal__close-btn-img {
+  display: block;
+  filter: none; /* preserve SVG stroke color */
+}
+
+/* Typography for the confirm-delete modal message */
+#confirm-delete-modal .modal__text {
+  font-family: "Poppins", Poppins, sans-serif;
+  font-weight: 500;
+  /* 'Medium' weight is represented by font-weight:500; use normal style */
+  font-style: normal;
+  font-size: 24px;
+  leading-trim: none;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #212121;
+  margin: 0 0 20px;
+}
+
+.modal__cancel-btn {
+  background: #ffffff;
+  border: 1px solid rgba(33, 33, 33, 0.12);
+  color: #212121;
+  cursor: pointer;
+}
+
+.modal__cancel-btn:hover {
+  background: #000000;
+  color: #ffffff;
+  cursor: pointer;
+  transition-duration: 0.2s;
+  opacity: 0.8;
 }
 
 .modal__image-container {
@@ -232,5 +370,29 @@
 
   .modal__image {
     max-width: unset;
+  }
+  /* Stack confirmation actions vertically on small screens
+     with Delete on top and Cancel below. Make both fixed-width (156px) and centered. */
+  .modal__actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center; /* center fixed-width buttons */
+  }
+
+  .modal__actions .modal__submit-btn,
+  .modal__actions .modal__cancel-btn {
+    width: 156px; /* fixed width */
+    height: 52px; /* hug height */
+    max-width: none;
+    box-sizing: border-box;
+    margin: 0; /* no extra margins; container centers them */
+  }
+
+  /* Ensure Delete (submit) is on top and Cancel below */
+  .modal__actions .modal__submit-btn {
+    order: 1;
+  }
+  .modal__actions .modal__cancel-btn {
+    order: 2;
   }
 }

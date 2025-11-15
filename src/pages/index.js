@@ -61,6 +61,12 @@ if (confirmDeleteModal) {
       closeModal(confirmDeleteModal)
     );
   }
+  const confirmCancel = confirmDeleteModal.querySelector(".modal__cancel-btn");
+  if (confirmCancel) {
+    confirmCancel.addEventListener("click", () =>
+      closeModal(confirmDeleteModal)
+    );
+  }
 }
 // initialization runs later after DOM queries
 

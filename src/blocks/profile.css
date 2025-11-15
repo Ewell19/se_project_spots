@@ -39,14 +39,105 @@
 .profile__avatar-wrap:hover .profile__avatar-edit,
 .profile__avatar-edit:focus {
   opacity: 1;
-  transform: translateY(-2px);
+  /* do not move the control on hover/focus; keep anchored horizontally */
+  transform: translateX(-50%) rotate(0deg);
 }
 
 .profile__avatar {
-  margin-right: 20px;
+  /* remove right margin so the wrap exactly matches the image size */
+  margin-right: 0;
   border-radius: 8px;
   width: 190px;
-  height: 190px;
+  /* increase height slightly so the avatar doesn't look squashed */
+  height: 200px;
+  /* preserve image aspect without distortion */
+  object-fit: cover;
+  object-position: center;
+  /* ensure pseudo-element can overlay the image only */
+  position: relative;
+  display: block;
+  overflow: hidden; /* clip overlay to the image bounds and respect border-radius */
+  cursor: pointer;
+}
+
+/* Avatar edit button: place in/near avatar with icon+text */
+.profile__avatar-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.profile__avatar-edit {
+  /* Anchor the edit control to the avatar image bottom */
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  /* position + rotation (angle: 0deg) */
+  transform: translateX(-50%) rotate(0deg);
+  width: 88px;
+  height: 16px;
+  border-radius: 90px;
+  /* no background color as requested */
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* requested gap */
+  padding: 4px 8px; /* keep small padding but height is controlled */
+  border: none;
+  color: rgba(255, 255, 255, 1);
+  /* typography requested */
+  font-family: "Poppins", Poppins, sans-serif;
+  font-weight: 500;
+  /* 'Medium' is represented by font-weight:500; keep normal style */
+  font-style: normal;
+  font-size: 16px;
+  leading-trim: none;
+  line-height: 100%;
+  letter-spacing: 0%;
+  cursor: pointer;
+  z-index: 3; /* keep edit control above the avatar overlay */
+}
+
+.profile__avatar-edit-icon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  margin-bottom: 1px; /* nudge icon to align with bottom text */
+  /* make icon white to match text; target the <img> element itself */
+  filter: invert(1) brightness(2);
+}
+
+/* Hover state: keep the control anchored but provide a subtle visual cue */
+.profile__avatar-edit:hover .profile__avatar-edit-icon,
+.profile__avatar-edit:focus .profile__avatar-edit-icon {
+  /* slight glow/brightness on hover */
+  filter: invert(1) brightness(2) drop-shadow(0 0 2px rgba(255, 255, 255, 0.12));
+}
+
+/* Avatar overlay: show a semi-transparent dark layer when hovering the avatar wrap.
+   The overlay is attached to the wrap (an element) so it works reliably across browsers. */
+.profile__avatar-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px; /* match .profile__avatar */
+  background: transparent;
+  pointer-events: none;
+  transition: background 160ms ease;
+  z-index: 2;
+}
+.profile__avatar-wrap:hover::after,
+.profile__avatar-wrap:focus-within::after {
+  background: rgba(33, 33, 33, 0.4);
+}
+
+/* keep the avatar visually stable on hover; only show overlay color */
+
+.profile__avatar-edit-text {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .profile__avatar-btn::after {
@@ -56,9 +147,11 @@
 .profile__column {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   margin-left: 20px;
   margin-top: -10px;
+  /* ensure column height matches avatar so we can bottom-align the edit button */
+  min-height: 200px;
 }
 
 .profile__name {
@@ -81,7 +174,7 @@
 }
 
 .profile__edit-btn {
-  margin-top: 10px;
+  margin-top: auto; /* push this button to the bottom of .profile__column */
   border: none;
   background-color: transparent;
   color: #212121b2;
@@ -144,23 +237,44 @@
     margin-right: 0;
     height: 80px;
     width: 80px;
+    object-fit: cover;
     margin-bottom: 12px;
   }
 
   /* On small screens, show the avatar edit button inline (no overlay) */
+  /* Make the wrapper relative so the edit control can overlay the avatar image */
   .profile__avatar-wrap {
-    position: static;
+    position: relative;
+    display: inline-block;
   }
 
+  /* Make the edit control a full-size, clickable overlay covering the avatar on small screens */
   .profile__avatar-edit {
-    position: static;
-    opacity: 1;
-    width: 32px;
-    height: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
     background: transparent;
-    margin-left: 8px;
-    border-radius: 4px;
     padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3; /* ensure it sits above the image and overlay */
+    opacity: 1; /* clickable and visible per hover rules */
+  }
+
+  /* Hide the textual label on small screens to avoid layout overflow */
+  .profile__avatar-edit-text {
+    display: none;
+  }
+
+  /* Also hide the pen/icon itself on small screens so the avatar area is clean.
+     Use a more specific selector to override earlier `.profile__avatar-edit img { display: block; }`. */
+  .profile__avatar-edit .profile__avatar-edit-icon {
+    display: none;
   }
 
   .profile__name {

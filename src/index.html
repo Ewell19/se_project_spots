@@ -27,7 +27,12 @@
               class="profile__avatar-edit"
               aria-label="Edit avatar"
             >
-              <img src="./images/pen.svg" alt="edit avatar" />
+              <img
+                src="./images/pen.svg"
+                alt="pen icon"
+                class="profile__avatar-edit-icon"
+              />
+              <span class="profile__avatar-edit-text">Edit Avatar</span>
             </button>
           </div>
           <div class="profile__column">
@@ -192,17 +197,20 @@
           <button type="button" class="modal__close-btn">
             <img
               class="modal__close-btn-img"
-              src="./images/X-icon.svg"
+              src="./images/close-x.svg"
               alt="close icon"
             />
           </button>
-          <h2 class="modal__title">Are you sure?</h2>
           <form class="modal__form" novalidate>
             <p class="modal__text">
-              Do you really want to delete this card? This action cannot be
-              undone.
+              Are you sure you want to delete this image?
             </p>
-            <button type="submit" class="modal__submit-btn">Yes, delete</button>
+            <div class="modal__actions">
+              <button type="button" class="modal__cancel-btn">Cancel</button>
+              <button type="submit" class="modal__submit-btn">
+                Yes, delete
+              </button>
+            </div>
           </form>
         </div>
       </div>
